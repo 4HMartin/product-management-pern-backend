@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "target": "ES2020",
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "lib": ["esnext"],
+    "strict": false,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "declaration": true
+  },
+  "include": ["src/**/*.ts"]
+}
