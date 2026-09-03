@@ -1,13 +1,28 @@
 import express from 'express'
+import {router} from "./router";
+import {db} from "./config/db";
 
-const server = express()
+// DATABASE CONNECTION
+async function connectDB(){
+    try {
+        await db.authenticate();
+        db.sync(); // Sync all defined models to the DB.
+        console.log("## DATABASE CONNECTED SUCCESSFULLY ##");
 
-// Routing
-server.get('/', (req, res) => {
+    } catch (error){
+        console.log(error);
+        console.log('## ERROR CONNECTING TO DATABASE ##');
+    }
+}
+connectDB();
 
-    res.json({
-        message: 'Hello World!',
-    })
-})
+// EXPRESS INSTANCE
+const server = express();
+
+// ENABLE JSON ON REQUESTS
+server.use(express.json());
+
+// ROUTER
+server.use('/api/v1/products', router);
 
 export default server
