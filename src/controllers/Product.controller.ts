@@ -65,3 +65,14 @@ export async function updateAvailability(req: Request, res: Response){
     await product.save();
     res.status(200).json({ data: product });
 }
+
+// DELETE - REMOVE A PRODUCT (HARD DELETE)
+export async function deleteProduct(req: Request, res: Response){
+    const { id } = req.params;
+    const product = await Product.findByPk(id as string);
+    if (!product) {
+        res.status(404).json({ message: "Product not found" })
+    }
+    await product.destroy();
+    res.status(200).json({ data: 'Product deleted successfully' });
+}

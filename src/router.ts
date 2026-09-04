@@ -4,7 +4,7 @@ import {
     createProduct,
     getProductById,
     updateProduct,
-    updateAvailability
+    updateAvailability, deleteProduct
 } from "./controllers/Product.controller";
 import {body, param} from "express-validator";
 import {handleInputErrors} from "./middlewares";
@@ -66,4 +66,14 @@ router.patch('/:id',
     handleInputErrors,
     // Controller
     updateAvailability
+)
+
+// DELETE - REMOVE A PRODUCT (HARD DELETE)
+router.delete('/:id',
+    // Validation
+    param('id').isInt().withMessage('Invalid product id'),
+    // Middlewares
+    handleInputErrors,
+    // Controller
+    deleteProduct
 )
