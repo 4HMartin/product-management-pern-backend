@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import {getProducts, createProduct, getProductById} from "./controllers/Product.controller";
+import {getProducts, createProduct, getProductById, updateProduct} from "./controllers/Product.controller";
 import {body, param} from "express-validator";
 import {handleInputErrors} from "./middlewares";
 
@@ -32,3 +32,22 @@ router.post('/',
     // Controller
     createProduct
 );
+
+// PUT - UPDATE A PRODUCT
+router.put('/:id',
+    // Validation
+    param('id')
+        .isInt().withMessage('Invalid product id'),
+    body('name')
+        .notEmpty().withMessage('Name is required'),
+    body('price')
+        .isNumeric().withMessage('Price must be a number')
+        .notEmpty().withMessage('Price is required')
+        .custom((value) => value > 0).withMessage('Only positive integer'),
+    body('availability')
+        .isBoolean().withMessage('Invalid product availability'),
+    // Middlewares
+    handleInputErrors,
+    // Controller
+    updateProduct
+)

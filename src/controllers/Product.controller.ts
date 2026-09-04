@@ -38,3 +38,16 @@ export async function createProduct(req: Request, res: Response){
         console.log(error);
     }
 }
+
+// PUT - UPDATE A PRODUCT
+export async function updateProduct(req: Request, res: Response){
+    const { id } = req.params;
+    const product = await Product.findByPk(id as string);
+    if (!product) {
+        res.status(404).json({ message: "Product not found" })
+    }
+
+    await product.update(req.body);
+    await product.save();
+    res.status(200).json({ data: product });
+}
