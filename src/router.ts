@@ -1,5 +1,11 @@
 import { Router } from 'express';
-import {getProducts, createProduct, getProductById, updateProduct} from "./controllers/Product.controller";
+import {
+    getProducts,
+    createProduct,
+    getProductById,
+    updateProduct,
+    updateAvailability
+} from "./controllers/Product.controller";
 import {body, param} from "express-validator";
 import {handleInputErrors} from "./middlewares";
 
@@ -50,4 +56,14 @@ router.put('/:id',
     handleInputErrors,
     // Controller
     updateProduct
+)
+
+// PATCH - UPDATE PRODUCT AVAILABILITY
+router.patch('/:id',
+    // Validation
+    param('id').isInt().withMessage('Invalid product id'),
+    // Middlewares
+    handleInputErrors,
+    // Controller
+    updateAvailability
 )

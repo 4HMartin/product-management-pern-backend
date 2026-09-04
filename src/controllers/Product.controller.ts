@@ -51,3 +51,17 @@ export async function updateProduct(req: Request, res: Response){
     await product.save();
     res.status(200).json({ data: product });
 }
+
+// PATCH - UPDATE PRODUCT AVAILABILITY
+export async function updateAvailability(req: Request, res: Response){
+    const { id } = req.params;
+    const product = await Product.findByPk(id as string);
+    if (!product) {
+        res.status(404).json({ message: "Product not found" })
+    }
+    // 'dataValues' Object that contains underlying model data.
+    // Toggle the boolean value using negation operator '!'.
+    product.availability = !product.dataValues.availability;
+    await product.save();
+    res.status(200).json({ data: product });
+}
