@@ -1,29 +1,40 @@
 import type { Request, Response } from "express";
 import Product from "../models/Product.model";
-import {check, validationResult} from "express-validator";
 
-export function getAllUsers(req: Request, res: Response) {
-    console.log('GET - All Users');
-    res.json({'message': 'All Users'});
+// GET - ALL PRODUCTS
+export async function getProducts(req: Request, res: Response) {
+    try {
+        const products = await Product.findAll({ order: [['id', 'DESC']] });
+        res.status(200).json({ data: products })
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+// GET - PRODUCT BY ID
+export async function getProductById(req: Request, res: Response) {
+    try {
+        const { id } = req.params;
+        // const product = await Product.findOne({
+        //     where: { id: req.params.id }
+        // })
+        const product = await Product.findByPk(id as string);
+        if (!product) {
+            res.status(404).json({ message: "Product not found" })
+        } else {
+            res.status(200).json({ data: product })
+        }
+    } catch (e) {
+        console.log(e);
+    }
 }
 
 // POST - CREATE A NEW PRODUCT
 export async function createProduct(req: Request, res: Response){
-
-    // Validation
-    await check('name')
-        .notEmpty().withMessage('Name is required')
-        .run(req);
-    await check('price')
-        .isNumeric().withMessage('Price must be a number')
-        .notEmpty().withMessage('Price is required')
-        .run(req);
-
-    let errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({errors: errors.array()});
+    try {
+        const product = await Product.create(req.body);
+        res.status(201).json({ data: product });
+    } catch (error) {
+        console.log(error);
     }
-
-    const product = await Product.create(req.body);
-    res.status(201).json({ status: "success", product: product });
 }
