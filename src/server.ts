@@ -7,7 +7,7 @@ async function connectDB(){
     try {
         await db.authenticate();
         db.sync(); // Sync all defined models to the DB.
-        console.log("## DATABASE CONNECTED SUCCESSFULLY ##");
+        // console.log("## DATABASE CONNECTED SUCCESSFULLY ##");
 
     } catch (error){
         console.log(error);
@@ -24,5 +24,10 @@ server.use(express.json());
 
 // ROUTER
 server.use('/api/v1/products', router);
+
+// TEST ROUTE
+server.get('/api', (req, res) => {
+    res.json({ message: 'Message from server' });
+})
 
 export default server
