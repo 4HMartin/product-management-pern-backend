@@ -49,7 +49,7 @@ router.put('/:id',
     body('price')
         .isNumeric().withMessage('Price must be a number')
         .notEmpty().withMessage('Price is required')
-        .custom((value) => value > 0).withMessage('Only positive integer'),
+        .custom((value) => value > 0).withMessage('Only positive numbers'),
     body('availability')
         .isBoolean().withMessage('Invalid product availability'),
     // Middlewares

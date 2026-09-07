@@ -20,7 +20,7 @@ export async function getProductById(req: Request, res: Response) {
         // })
         const product = await Product.findByPk(id as string);
         if (!product) {
-            res.status(404).json({ message: "Product not found" })
+            res.status(404).json({ error: "Product not found" })
         } else {
             res.status(200).json({ data: product })
         }
@@ -44,7 +44,7 @@ export async function updateProduct(req: Request, res: Response){
     const { id } = req.params;
     const product = await Product.findByPk(id as string);
     if (!product) {
-        res.status(404).json({ message: "Product not found" })
+        res.status(404).json({ error: "Product not found" })
     }
 
     await product.update(req.body);
@@ -57,7 +57,7 @@ export async function updateAvailability(req: Request, res: Response){
     const { id } = req.params;
     const product = await Product.findByPk(id as string);
     if (!product) {
-        res.status(404).json({ message: "Product not found" })
+        res.status(404).json({ error: "Product not found" })
     }
     // 'dataValues' Object that contains underlying model data.
     // Toggle the boolean value using negation operator '!'.
@@ -71,7 +71,7 @@ export async function deleteProduct(req: Request, res: Response){
     const { id } = req.params;
     const product = await Product.findByPk(id as string);
     if (!product) {
-        res.status(404).json({ message: "Product not found" })
+        res.status(404).json({ error: "Product not found" })
     }
     await product.destroy();
     res.status(200).json({ data: 'Product deleted successfully' });
