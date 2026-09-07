@@ -1,4 +1,5 @@
 import swaggerJSDoc from "swagger-jsdoc";
+import {SwaggerUiOptions} from "swagger-ui-express";
 
 const options: swaggerJSDoc.Options = {
     swaggerDefinition: {
@@ -19,4 +20,18 @@ const options: swaggerJSDoc.Options = {
 }
 
 const swaggerSpec = swaggerJSDoc(options)
+
+// CUSTOM STYLES
+const swaggerUiOptions: SwaggerUiOptions = {
+    customCss: `
+        .topbar-wrapper .link {
+            content: url('https://4hmartin.com/4HM_LOGO_V2_WHITE.png');
+            height: 80px;
+            width: auto;
+        }
+    `,
+    customSiteTitle: 'Docs REST API Node.js / Express / TypeScript',
+}
+
 export default swaggerSpec
+export { swaggerUiOptions };
