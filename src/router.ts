@@ -33,9 +33,40 @@ export const router = Router();
  *                  type: boolean
  *                  example: true
  *                  description: The Product availability
+ *              createdAt:
+ *                  type: string
+ *                  format: date-time
+ *                  example: 2026-09-07T13:05:03.061Z
+ *                  description: The Product creation date
+ *              updatedAt:
+ *                  type: string
+ *                  format: date-time
+ *                  example: 2026-09-07T13:05:03.061Z
+ *                  description: The Product last update date
  */
 
 // GET - ALL PRODUCTS
+/**
+ * @swagger
+ * /api/v1/products:
+ *      get:
+ *          summary: Get a list of products
+ *          tags:
+ *              - Products
+ *          description: Return a list of products
+ *          responses:
+ *              200:
+ *                  description: Successful response
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              type: object
+ *                              properties:
+ *                                  data:
+ *                                      type: array
+ *                                      items:
+ *                                          $ref: '#/components/schemas/Product'
+ */
 router.get('/', getProducts);
 
 // GET - PRODUCT BY ID
