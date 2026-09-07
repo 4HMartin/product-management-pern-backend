@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import {Router} from 'express';
 import {
     getProducts,
     createProduct,
@@ -70,6 +70,36 @@ export const router = Router();
 router.get('/', getProducts);
 
 // GET - PRODUCT BY ID
+/**
+ * @swagger
+ * /api/v1/products/{id}:
+ *      get:
+ *          summary: Get a product by ID
+ *          tags:
+ *            - Products
+ *          description: Return a product based on its unique ID
+ *          parameters:
+ *            - in: path
+ *              name: id
+ *              description: The ID of the product to retrieve
+ *              required: true
+ *              schema:
+ *                  type: integer
+ *          responses:
+ *              200:
+ *                  description: Successful response
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              type: object
+ *                              properties:
+ *                                  data:
+ *                                      $ref: '#/components/schemas/Product'
+ *              404:
+ *                  description: Not found
+ *              400:
+ *                  description: Bad Request - Invalid ID
+ */
 router.get('/:id',
     // Validation
     param('id').isInt().withMessage('Invalid product id'),
@@ -80,6 +110,33 @@ router.get('/:id',
 );
 
 // POST - CREATE A NEW PRODUCT
+/**
+ * @swagger
+ * /api/v1/products:
+ *      post:
+ *          summary: Creates a new product
+ *          tags:
+ *            - Products
+ *          description: Returns a new record in the database
+ *          requestBody:
+ *              required: true
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                              name:
+ *                                  type: string
+ *                                  example: "Razer Tournament Edition keyboard"
+ *                              price:
+ *                                  type: number
+ *                                  example: 180
+ *          responses:
+ *              201:
+ *                  description: Product created successfully
+ *              400:
+ *                  description: Bad Request - Invalid input data
+ */
 router.post('/',
     // Validation
     body('name')
