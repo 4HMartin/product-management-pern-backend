@@ -1,13 +1,15 @@
 import express from 'express'
-import {router} from "./router";
-import {db} from "./config/db";
+import swaggerUi from "swagger-ui-express"
+import swaggerSpec from "./config/swagger"
+import {router} from "./router"
+import {db} from "./config/db"
 
 // DATABASE CONNECTION
 export async function connectDB(){
     try {
         await db.authenticate();
-        db.sync(); // Sync all defined models to the DB.
-        console.log("## DATABASE CONNECTED SUCCESSFULLY ##")
+        await db.sync(); // Sync all defined models to the DB.
+        // console.log("## DATABASE CONNECTED SUCCESSFULLY ##")
 
     } catch (error){
         console.log(error);
@@ -24,9 +26,7 @@ server.use(express.json())
 // ROUTER
 server.use('/api/v1/products', router)
 
-// TEST ROUTE
-server.get('/api', (req, res) => {
-    res.json({ message: 'Message from server' })
-})
+// DOCS
+server.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 
 export default server

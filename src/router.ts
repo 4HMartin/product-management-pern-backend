@@ -10,6 +10,30 @@ import {body, param} from "express-validator";
 import {handleInputErrors} from "./middlewares";
 
 export const router = Router();
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *      Product:
+ *          type: object
+ *          properties:
+ *              id:
+ *                  type: integer
+ *                  example: 1
+ *                  description: The Product ID
+ *              name:
+ *                  type: string
+ *                  example: Alienware Monitor 49 Oled
+ *                  description: The Product name
+ *              price:
+ *                  type: number
+ *                  example: 600
+ *                  description: The Product price
+ *              availability:
+ *                  type: boolean
+ *                  example: true
+ *                  description: The Product availability
+ */
 
 // GET - ALL PRODUCTS
 router.get('/', getProducts);
