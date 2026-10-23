@@ -1,4 +1,6 @@
 import express from 'express'
+import cors, {CorsOptions} from 'cors'
+import morgan from 'morgan'
 import swaggerUi from "swagger-ui-express"
 import swaggerSpec, {swaggerUiOptions} from "./config/swagger"
 import {router} from "./router"
@@ -20,8 +22,23 @@ export async function connectDB(){
 // EXPRESS INSTANCE
 const server = express()
 
+// CORS - ALLOW FRONTEND REQUESTS
+const corsOptions: CorsOptions = {
+    origin: function(origin, callback) {
+        if(origin === process.env.FRONTEND_URL){
+            callback(null, true)
+        } else {
+            callback(new Error('CORS Error - Origin: ' + origin));
+        }
+    }
+}
+server.use(cors(corsOptions))
+
 // ENABLE JSON ON REQUESTS
 server.use(express.json())
+
+// MORGAN LOGS
+server.use(morgan('dev'))
 
 // ROUTER
 server.use('/api/v1/products', router)

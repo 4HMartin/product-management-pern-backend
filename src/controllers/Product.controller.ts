@@ -3,7 +3,9 @@ import Product from "../models/Product.model";
 
 // GET - ALL PRODUCTS
 export async function getProducts(req: Request, res: Response) {
-    const products = await Product.findAll({order: [['id', 'DESC']]});
+    const products = await Product.findAll({
+        order: [['id', 'DESC']]
+    });
     res.status(200).json({data: products})
 }
 
